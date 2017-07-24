@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +22,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 
 public class BeneficiaryRecyclerAdapter extends BaseAdapter{
     Context c;
     ArrayList<DonorDeatils> donors;
+    DatabaseReference db;
 
-    public BeneficiaryRecyclerAdapter(Context c, ArrayList<DonorDeatils> donors){
+    BeneficiaryRecyclerAdapter(Context c, ArrayList<DonorDeatils> donors){
+        Log.e("Aman","Benificiary Const");
         this.c = c;
+//        db = FirebaseDatabase.getInstance().getReference();
+//        this.donors = new FirebaseRetrieve(db).getDonorsAakash();
+        for (DonorDeatils d: donors){
+            Log.e("Aman:",d.getUsername());
+       }
         this.donors = donors;
     }
 
@@ -53,6 +64,10 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
         if (convertView == null)
             convertView = LayoutInflater.from(c).inflate(R.layout.listviewdatalayout, parent, false);
 
+        for (DonorDeatils d: donors){
+            Log.e("Aman init:",d.getUsername());
+        }
+
         TextView donorName = (TextView) convertView.findViewById(R.id.donor_name);
         TextView donorContact = (TextView) convertView.findViewById(R.id.donor_contact);
         TextView donorCity = (TextView) convertView.findViewById(R.id.donor_city);
@@ -64,6 +79,7 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
         donorCity.setText("City: "+donorDeatils.getCity());
         donorContact.setText("Contact: "+donorDeatils.getMobile());
         donorBloodGroup.setText("Blood Group: "+donorDeatils.getBloodgroup());
+        Log.e("Dono: ",donorDeatils.getUsername());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

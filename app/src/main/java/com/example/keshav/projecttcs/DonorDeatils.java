@@ -14,6 +14,34 @@ public class DonorDeatils implements Serializable {
     public String mobile;
     public String bloodgroup;
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String gender;
+    public String age;
+    public String pincode;
+
 
     public DonorDeatils(){}
 
@@ -32,6 +60,10 @@ public class DonorDeatils implements Serializable {
     public String getMobile() { return mobile; }
 
     public String getBloodgroup() { return bloodgroup; }
+
+
+
+
 
 
 }

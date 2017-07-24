@@ -20,6 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -77,8 +79,19 @@ public class BeneficiaryListActivity extends AppCompatActivity{
 
         db = FirebaseDatabase.getInstance().getReference();
         fr = new FirebaseRetrieve(db);
-        adapter = new BeneficiaryRecyclerAdapter(this, fr.retrieve());
+        fr.retrieve();
+        do {
+            adapter = new BeneficiaryRecyclerAdapter(this, fr.getDonorsAakash());
+        }while(fr.getDonorsAakash() == null);
         listView.setAdapter(adapter);
+
+        Button b = (Button) findViewById(R.id.refresh);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.notifyDataSetChanged();
+            }
+        });
 
     }
 }
