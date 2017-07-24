@@ -21,10 +21,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,11 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BeneficiaryListActivity extends MainActivity implements BeneficiaryRecyclerAdapter.ItemClickCallBack{
+public class BeneficiaryListActivity extends AppCompatActivity{
 
 
     //private AppCompatActivity activity = BeneficiaryListActivity.this;
-    Context context = BeneficiaryListActivity.this;
+    /*Context context = BeneficiaryListActivity.this;
     private RecyclerView recyclerViewBeneficiary;
     private ArrayList<DonorDeatils> listBeneficiary;
     private List<DonorDeatils> newDList;
@@ -47,119 +49,36 @@ public class BeneficiaryListActivity extends MainActivity implements Beneficiary
     private BeneficiaryRecyclerAdapter beneficiaryRecyclerAdapter;
     List<String> endUserID = new ArrayList<String>();
 
-    DatabaseReference dref = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("Donors");
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    String Uid = firebaseUser.getUid();
+    String Uid = firebaseUser.getUid(); */
+
+    DatabaseReference db;
+    FirebaseRetrieve fr;
+    BeneficiaryRecyclerAdapter adapter;
+    ListView listView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beneficiary_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerViewBeneficiary = (RecyclerView) findViewById(R.id.recyclerViewBeneficiary);
+       /* recyclerViewBeneficiary = (RecyclerView) findViewById(R.id.recyclerViewBeneficiary);
         listBeneficiary = new ArrayList<>();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewBeneficiary.setLayoutManager(mLayoutManager);
         recyclerViewBeneficiary.setItemAnimator(new DefaultItemAnimator());
         recyclerViewBeneficiary.setHasFixedSize(true);
-        recyclerViewBeneficiary.setAdapter(beneficiaryRecyclerAdapter);
-        getDetails();
-        beneficiaryRecyclerAdapter.notifyDataSetChanged();
+        recyclerViewBeneficiary.setAdapter(beneficiaryRecyclerAdapter);;
+        beneficiaryRecyclerAdapter.notifyDataSetChanged();  */
 
+        listView = (ListView) findViewById(R.id.userList);
 
-    }
-
-    private void getDetails(){
-        listBeneficiary.clear();
-        dref.child("Donors").child("endUser").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    endUserID.add(dataSnapshot1.getKey());
-
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference dataRef = database.getReference("endUsers").child(dataSnapshot1.getKey());
-                    dataRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot postSnapShot : dataSnapshot.child("Donors").getChildren()){
-                                requestList.clear();
-                                List<AcceptRequest> newList = new ArrayList<>();
-                                newList.clear();
-
-                                for (DataSnapshot Snapshot : postSnapShot.getChildren()){
-                                    String t = (String) Snapshot.child("Name").getValue();
-                                    String c = (String) Snapshot.child("Contact").getValue();
-                                    String ci = (String) Snapshot.child("Message").getValue();
-
-                                    AcceptRequest ar = new AcceptRequest(t, c, ci, (Boolean) Snapshot.child("requestPending").getValue());
-                                    requestList.add(ar);
-                                }
-
-                                for (AcceptRequest x : requestList)
-                                    newList.add(x);
-
-                                String name = (String) dataSnapshot.child("Donors").child("Name").getValue();
-                                String contact = (String) dataSnapshot.child("Donors").child("Contact").getValue();
-                                String city = (String) dataSnapshot.child("Donors").child("City").getValue();
-                                String bloodgroup = (String) dataSnapshot.child("Donors").child("Blood Group").getValue();
-                                String email = (String) dataSnapshot.child("Donors").child("Email").getValue();
-
-                                DonorDeatils x = new DonorDeatils(name, city, contact, bloodgroup, email);
-                                x.setRequests(newList);
-
-                                newDList.clear();
-                                newDList.addAll(listBeneficiary);
-                                newDList.add(x);
-                                listBeneficiary.clear();
-                                listBeneficiary.addAll(newDList);
-                                beneficiaryRecyclerAdapter.notifyDataSetChanged();
-
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onItemClick(int position) {
-
-    }
-
-    @Override
-    public void onSecondaryIconClick(int position) {
+        db = FirebaseDatabase.getInstance().getReference();
+        fr = new FirebaseRetrieve(db);
+        adapter = new BeneficiaryRecyclerAdapter(this, fr.retrieve());
+        listView.setAdapter(adapter);
 
     }
 }

@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * Created by keshav on 10-07-2017.
  */
 
-public class SQLiteListAdapter extends BaseAdapter {
+public class SQLiteListAdapter{
 
-    Context context;
+   /* Context context;
 
     ArrayList<String> userID;
     ArrayList<String> UserName;
@@ -96,6 +96,6 @@ public class SQLiteListAdapter extends BaseAdapter {
         TextView textviewname;
         TextView textviewphone_number;
         TextView textviewcity;
-    }
+    }*/
 
 }

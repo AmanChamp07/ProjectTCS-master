@@ -8,28 +8,21 @@
     android:layout_height="match_parent"
     tools:context="com.example.keshav.projecttcs.BeneficiaryListActivity">
 
-
-
-<android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:layout_height="50dp">
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/toolbar"/>
+        </android.support.design.widget.AppBarLayout>
 
-    </android.support.design.widget.AppBarLayout>
+        <ListView
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userList">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewBeneficiary"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:layout_marginTop="?actionBarSize"/>
+        </ListView>
 
 </android.support.design.widget.CoordinatorLayout>

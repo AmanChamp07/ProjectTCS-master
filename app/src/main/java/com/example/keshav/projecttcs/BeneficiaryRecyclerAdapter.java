@@ -5,95 +5,80 @@ package com.example.keshav.projecttcs;
  */
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class BeneficiaryRecyclerAdapter extends RecyclerView.Adapter<BeneficiaryRecyclerAdapter.BeneficiaryViewHolder> {
+public class BeneficiaryRecyclerAdapter extends BaseAdapter{
+    Context c;
+    ArrayList<DonorDeatils> donors;
 
-    private ArrayList<DonorDeatils> listBeneficiary;
-    DonorDeatils donorDeatils;
-    private Context mContext;
-    private ItemClickCallBack itemClickCallBack;
-
-    public BeneficiaryRecyclerAdapter(ArrayList<DonorDeatils> listBeneficiary, Context mContext) {
-        this.listBeneficiary = listBeneficiary;
-        this.mContext = mContext;
-
-    }
-
-    public class BeneficiaryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        public AppCompatTextView textViewName;
-        public AppCompatTextView textViewEmail;
-        public AppCompatTextView textViewAddress;
-        public AppCompatTextView textViewCountry;
-        public  ImageView overflow;
-        LinearLayout rl;
-
-        public BeneficiaryViewHolder(View view) {
-            super(view);
-            textViewName = (AppCompatTextView) view.findViewById(R.id.textViewName);
-            textViewEmail = (AppCompatTextView) view.findViewById(R.id.textViewEmail);
-            textViewAddress = (AppCompatTextView) view.findViewById(R.id.textViewAddress);
-            textViewCountry = (AppCompatTextView) view.findViewById(R.id.textViewCountry);
-            rl = (LinearLayout) view.findViewById(R.id.singleDataLinearLayout);
-            rl.setOnClickListener(this);
-        }
-
-
-        @Override
-        public void onClick(View v) {
-            if (v.getId() == R.id.singleDataLinearLayout)
-                itemClickCallBack.onItemClick(getAdapterPosition());
-        }
-    }
-
-
-    @Override
-    public BeneficiaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // inflating recycler item view
-        View itemView = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_beneficiary_recycler, parent, false);
-
-        return new BeneficiaryViewHolder(itemView);
+    public BeneficiaryRecyclerAdapter(Context c, ArrayList<DonorDeatils> donors){
+        this.c = c;
+        this.donors = donors;
     }
 
     @Override
-    public void onBindViewHolder(final BeneficiaryViewHolder holder, int position) {
-
-        donorDeatils = listBeneficiary.get(position);
-
-        holder.textViewName.setText(donorDeatils.getUsername());
-        holder.textViewEmail.setText(donorDeatils.getEmail());
-        holder.textViewAddress.setText(donorDeatils.getCity());
-        holder.textViewCountry.setText(donorDeatils.getBloodgroup());
-
-
+    public int getCount() {
+        return donors.size();
     }
-
 
     @Override
-    public int getItemCount() {
-        return listBeneficiary.size();
+    public Object getItem(int position) {
+        return donors.get(position);
     }
 
-    public interface ItemClickCallBack{
-        void onItemClick(int position);
-        void onSecondaryIconClick(int position);
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
-    public void setItemClickCallBack(final ItemClickCallBack itemClickCallBack){
-        this.itemClickCallBack = itemClickCallBack;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null)
+            convertView = LayoutInflater.from(c).inflate(R.layout.listviewdatalayout, parent, false);
+
+        TextView donorName = (TextView) convertView.findViewById(R.id.donor_name);
+        TextView donorContact = (TextView) convertView.findViewById(R.id.donor_contact);
+        TextView donorCity = (TextView) convertView.findViewById(R.id.donor_city);
+        TextView donorBloodGroup = (TextView) convertView.findViewById(R.id.donor_blood_group);
+
+        final DonorDeatils donorDeatils = (DonorDeatils) this.getItem(position);
+
+        donorName.setText(donorDeatils.getUsername());
+        donorCity.setText("City: "+donorDeatils.getCity());
+        donorContact.setText("Contact: "+donorDeatils.getMobile());
+        donorBloodGroup.setText("Blood Group: "+donorDeatils.getBloodgroup());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String details = "Name: "+donorDeatils.getUsername()+"\nContact: "+donorDeatils.getMobile()+"\nCity: "+donorDeatils.getCity()+"\nBlood Group: "+donorDeatils.getBloodgroup();
+
+                new AlertDialog.Builder(c).setIcon(null).setTitle("Donor Details").setMessage(details).setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(c, "Request Notification under Process", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        return convertView;
     }
 }

@@ -109,7 +109,7 @@ public class Signup extends AppCompatActivity {
         mpassword = password.getText().toString();
         musername = username.getText().toString();
         mconfirm = confirm.getText().toString();
-        mgender = confirm.getText().toString();
+        mgender = gender.getText().toString();
         mage = age.getText().toString();
         mcontact = contact.getText().toString();
         mcity = city.getText().toString();
