@@ -14,8 +14,7 @@ public class DonorDeatils implements Serializable {
     public String mobile;
     public String bloodgroup;
 
-    public String getGender() {
-        return gender;
+    public String getGender() {        return gender;
     }
 
     public void setGender(String gender) {

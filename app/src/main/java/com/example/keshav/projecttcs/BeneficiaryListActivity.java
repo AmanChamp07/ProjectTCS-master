@@ -5,12 +5,15 @@ package com.example.keshav.projecttcs;
  */
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.BoolRes;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +24,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -39,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BeneficiaryListActivity extends AppCompatActivity{
+public class BeneficiaryListActivity extends AppCompatActivity {
 
 
     //private AppCompatActivity activity = BeneficiaryListActivity.this;
@@ -82,7 +86,7 @@ public class BeneficiaryListActivity extends AppCompatActivity{
         fr.retrieve();
         do {
             adapter = new BeneficiaryRecyclerAdapter(this, fr.getDonorsAakash());
-        }while(fr.getDonorsAakash() == null);
+        } while (fr.getDonorsAakash() == null);
         listView.setAdapter(adapter);
 
         Button b = (Button) findViewById(R.id.refresh);
@@ -93,5 +97,29 @@ public class BeneficiaryListActivity extends AppCompatActivity{
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeneficiaryListActivity.this);
+                alertDialogBuilder.setTitle("Blood Donation Request");
+                alertDialogBuilder.setMessage("Do you want to send request to this donor?").setCancelable(false)
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Sendrequest sendRequest = new Sendrequest();
+                                sendRequest.sendNotification();
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+
+        });
     }
 }

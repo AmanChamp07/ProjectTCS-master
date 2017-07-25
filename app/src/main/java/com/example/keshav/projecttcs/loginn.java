@@ -6,18 +6,23 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
+import com.facebook.*;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,9 +47,12 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class loginn extends MainActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    private FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -59,6 +67,28 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
     EditText userName, password;
     Button mlogin;
     TextView createAccount;
+    TextView textView = (TextView) findViewById(R.id.user_name);
+    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            AccessToken accessToken = loginResult.getAccessToken();
+            Profile profile = Profile.getCurrentProfile();
+            displayMessage(profile);
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onError(FacebookException error) {
+
+        }
+    };
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +96,6 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_loginn);
-
         init();
 
         //Firebase Listener//
@@ -116,7 +145,40 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
 
         g_plus.setOnClickListener(this);
         mlogin.setOnClickListener(this);
+
+        callbackManager = CallbackManager.Factory.create();
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+
+            }
+        };
+
+        profileTracker = new ProfileTracker() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                displayMessage(currentProfile);
+            }
+        };
+
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+
+        LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_bn);
+        loginButton.setReadPermissions("user_friends");
+        loginButton.registerCallback(callbackManager, callback);
+
+
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void displayMessage(Profile profile){
+        if (profile != null){
+            textView.setText(profile.getName());
+        }
+    }
+
 
     @Override
     protected void onStop() {
@@ -124,12 +186,22 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+        accessTokenTracker.startTracking();
+        profileTracker.stopTracking();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onResume(){
+        super.onResume();
+        Profile profile = Profile.getCurrentProfile();
+        displayMessage(profile);
     }
 
     private void init() {
@@ -201,7 +273,6 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
                 break;
-
         }
     }
 
@@ -219,12 +290,13 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
             } else {
                 Log.i(TAG, "Failed SignIn");
                 Log.d(TAG, String.valueOf(result.getStatus()));
-                // Google Sign In failed, update UI appropriately
-                // [START_EXCLUDE]
-                /// aakash updateUI(null);
-                // [END_EXCLUDE]
+
             }
         }
+        else{
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

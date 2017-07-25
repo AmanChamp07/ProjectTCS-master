@@ -21,15 +21,12 @@
 
     <TextView
 
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
+        android:textSize="25sp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/pname"
-        android:layout_alignBottom="@+id/pname"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/prname"
-        android:layout_alignLeft="@+id/btn_change"
-        android:layout_alignStart="@+id/btn_change" />
+        android:id="@+id/prname" />
 
 
     <TextView
@@ -39,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="32sp"
+        android:layout_marginTop="32dp"
         android:layout_below="@+id/pname"
         android:id="@+id/page"
       />
@@ -48,19 +45,17 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/page"
-        android:layout_marginLeft="111dp"
-        android:layout_marginStart="111dp"
+        android:textSize="25sp"
+        android:layout_marginTop="32dp"
         android:layout_alignBaseline="@+id/page"
-        android:layout_alignBottom="@+id/page"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:id="@+id/prage"
-        />
+        android:layout_toEndOf="@+id/pphone"
+        android:layout_alignStart="@+id/prname" />
 
 
     <TextView
-        android:text="Weight:"
+        android:text="Blood Group:"
         android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,19 +68,15 @@
 
     <TextView
 
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/pweight"
-        android:layout_marginLeft="111dp"
-        android:layout_marginStart="111dp"
-        android:layout_alignBaseline="@+id/pweight"
+        android:id="@+id/prweight"
         android:layout_alignBottom="@+id/pweight"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/prweight" />
+        android:layout_alignTop="@+id/pweight" />
 
     <TextView
-        android:text="Last  Date:"
+        android:text="City :"
         android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,13 +91,12 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/pdate"
         android:layout_alignBottom="@+id/pdate"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/prdate"
-        android:layout_alignLeft="@+id/prweight"
-        android:layout_alignStart="@+id/prweight" />
+        android:layout_alignTop="@+id/pdate"
+        android:layout_alignStart="@+id/prage" />
 
     <TextView
         android:text="Contact:"
@@ -124,14 +114,11 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/pphone"
-        android:layout_marginLeft="111dp"
-        android:layout_marginStart="111dp"
-        android:layout_alignBaseline="@+id/pphone"
         android:layout_alignBottom="@+id/pphone"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/prphone" />
+        android:id="@+id/prphone"
+        android:layout_alignTop="@+id/pphone"
+        android:layout_alignStart="@+id/prdate" />
 
 
 

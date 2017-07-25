@@ -190,6 +190,8 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_logout) {
             //firebase signOut
             FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, loginn.class);
+            startActivity(intent);
 
             //Google signOut
            /* Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(

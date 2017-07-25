@@ -29,6 +29,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 
 
 /**
@@ -42,8 +43,9 @@ public class Signup extends AppCompatActivity {
     Button createAccount;
     TextView already;
 
+    static ArrayList<String> details = new ArrayList<>();
 
-    String memail, musername, mpassword, mconfirm, mgender, mage, mcontact, mcity, mpincode, mbloodgroup;
+    static String memail, musername, mpassword, mconfirm, mgender, mage, mcontact, mcity, mpincode, mbloodgroup;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -158,6 +160,15 @@ public class Signup extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public static ArrayList<String> profile_details(){
+        details.add(musername);
+        details.add(mage);
+        details.add(mbloodgroup);
+        details.add(mcity);
+        details.add(mcontact);
+        return details;
     }
 
     @Override
