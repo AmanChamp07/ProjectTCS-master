@@ -13,6 +13,7 @@ public class AcceptRequest implements Serializable {
     String mesage;
     boolean requestPending;
 
+    //jhghjk
     public AcceptRequest(String username, String mobile, String mesage, boolean requestPending){
         this.username = username;
         this.mobile = mobile;

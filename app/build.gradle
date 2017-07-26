@@ -58,6 +58,13 @@ dependencies {
     compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
     compile 'com.android.support:customtabs'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
+    compile 'com.android.support:customtabs'
+
+    compile'com.google.android.gms:play-services-gcm:10.0.1'
+    compile'com.google.android.gms:play-services-location:10.0.1'
+    compile'com.squareup.okhttp3:okhttp:3.6.0'
 }
 apply plugin: 'com.google.gms.google-services'
 
