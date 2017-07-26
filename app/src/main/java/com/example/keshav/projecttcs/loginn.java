@@ -57,6 +57,9 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
+    static boolean flag = false;
+
+
     //Shared Preferences file and Editor
     SharedPreferences logInPref;
 
@@ -67,8 +70,8 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
     EditText userName, password;
     Button mlogin;
     TextView createAccount;
-    TextView textView = (TextView) findViewById(R.id.user_name);
-    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+    //TextView textView = (TextView) findViewById(R.id.user_name);
+    //ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @RequiresApi(api = Build.VERSION_CODES.M)
@@ -174,9 +177,9 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void displayMessage(Profile profile){
-        if (profile != null){
-            textView.setText(profile.getName());
-        }
+        //if (profile != null){
+          //  textView.setText(profile.getName());
+        //}
     }
 
 
@@ -243,6 +246,12 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 Log.d("FireBase", "signInWithEmail:onComplete:" + task.isSuccessful());
 
+                                Toast temp = Toast.makeText(loginn.this, "Welcome!", Toast.LENGTH_SHORT);
+                                temp.show();
+
+                                flag = true;
+
+
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
@@ -287,6 +296,12 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
+                Toast temp = Toast.makeText(loginn.this, "Welcome!", Toast.LENGTH_SHORT);
+                temp.show();
+
+                flag = true;
+
             } else {
                 Log.i(TAG, "Failed SignIn");
                 Log.d(TAG, String.valueOf(result.getStatus()));
@@ -336,5 +351,10 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void onBackPressed() {
+        startActivity(new Intent(loginn.this, MainActivity.class));
+        super.onBackPressed();
     }
 }

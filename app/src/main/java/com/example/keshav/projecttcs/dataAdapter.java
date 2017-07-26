@@ -13,22 +13,22 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by keshav on 17-07-2017.
+ * Created by keshav on 18-07-2017.
  */
 
-public class dataAdapter extends ArrayAdapter<Image> {
+public class dataAdapter extends ArrayAdapter<StorePics> {
 
     Context context;
-    ArrayList<Image> mcontact;
+    ArrayList<StorePics> mcontact;
 
 
-    public dataAdapter(Context context, ArrayList<Image> imagess) {
-        super(context, R.layout.listcontacts, imagess);
-        this.context = context;
-        this.mcontact = imagess;
+    public dataAdapter(Context context, ArrayList<StorePics> contact){
+        super(context, R.layout.listcontacts, contact);
+        this.context=context;
+        this.mcontact=contact;
     }
 
-    public class Holder {
+    public  class  Holder{
         TextView nameFV;
         ImageView pic;
     }
@@ -37,7 +37,7 @@ public class dataAdapter extends ArrayAdapter<Image> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
 
-        Image data = getItem(position);
+        StorePics data = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
 
         Holder viewHolder; // view lookup cache stored in tag
@@ -59,7 +59,7 @@ public class dataAdapter extends ArrayAdapter<Image> {
         }
 
 
-        viewHolder.nameFV.setText("First Name: " + data.getFName());
+        viewHolder.nameFV.setText(""+data.getFName());
         viewHolder.pic.setImageBitmap(convertToBitmap(data.getImage()));
 
 
@@ -68,8 +68,9 @@ public class dataAdapter extends ArrayAdapter<Image> {
     }
     //get bitmap image from byte array
 
-    private Bitmap convertToBitmap(byte[] b) {
+    private Bitmap convertToBitmap(byte[] b){
 
         return BitmapFactory.decodeByteArray(b, 0, b.length);
+
     }
 }

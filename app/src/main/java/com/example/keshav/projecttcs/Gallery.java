@@ -1,57 +1,56 @@
 package com.example.keshav.projecttcs;
 
-/**
- * Created by Shivani on 16-07-2017.
- */
-
-
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.keshav.projecttcs.Image;
-import com.example.keshav.projecttcs.MainActivity;
-import com.example.keshav.projecttcs.R;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-public class Gallery extends MainActivity {
+public class Gallery extends AppCompatActivity {
 
     private EditText fname;
     private ImageView pic;
-    private DatabaseHandler dbi;
+    private DatabaseHandler db;
     private String f_name;
-    private  ListView lv;
+    private ListView lv;
     private dataAdapter data;
-    private Image dataModel;
+    private StorePics dataModel;
     private Bitmap bp;
     private byte[] photo;
-
-
+    private static final int CAM_REQUEST = 1313;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acticity_camera);
+        setContentView(R.layout.activity_gallery);
 
-        //Instantiate database handler
-        dbi=new DatabaseHandler(this);
+
+        db=new DatabaseHandler(this);
+
         lv = (ListView) findViewById(R.id.list1);
         pic= (ImageView) findViewById(R.id.pic);
         fname=(EditText) findViewById(R.id.txt1);
+
+    }
+
+    public void onButtonClick(View v) {
+        if (v.getId() == R.id.btn_camera) {
+            Intent cameraintent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraintent, CAM_REQUEST);
+        }
+
     }
 
     public void buttonClicked(View v){
@@ -64,7 +63,7 @@ public class Gallery extends MainActivity {
                 if(fname.getText().toString().trim().equals("")){
                     Toast.makeText(getApplicationContext(),"Name edit text is empty, Enter name", Toast.LENGTH_LONG).show();
                 }  else{
-                    addImages();
+                    addContact();
                 }
 
                 break;
@@ -157,17 +156,17 @@ public class Gallery extends MainActivity {
     }
 
     //Insert data to the database
-    private void addImages(){
+    private void addContact(){
         getValues();
 
-        dbi.addImages(new Image(f_name, photo));
+        db.addContacts(new StorePics(f_name, photo));
         Toast.makeText(getApplicationContext(),"Saved successfully", Toast.LENGTH_LONG).show();
     }
 
     //Retrieve data from the database and set to the list view
     private void ShowRecords(){
-        final ArrayList<Image> images = new ArrayList<>(dbi.getAllImages());
-        data=new dataAdapter(this, images);
+        final ArrayList<StorePics> contacts = new ArrayList<>(db.getAllContacts());
+        data=new dataAdapter(this, contacts);
 
         lv.setAdapter(data);
 
@@ -175,11 +174,17 @@ public class Gallery extends MainActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                dataModel = images.get(position);
+                dataModel = contacts.get(position);
 
-                Toast.makeText(getApplicationContext(),String.valueOf(dataModel.getID()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), String.valueOf(dataModel.getID()), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    public void onBackPressed() {
+        startActivity(new Intent(Gallery.this, MainActivity.class));
+        super.onBackPressed();
+    }
 }
+
 

@@ -132,22 +132,21 @@ public class MainActivity extends AppCompatActivity
 
         }  else if (id == R.id.nav_log) {
 
-            if (Profile.flag)
+            if (loginn.flag)
             {
-
                 Toast temp = Toast.makeText(this, "You are already logged in!", Toast.LENGTH_SHORT);
                 temp.show();            }
 
             else {
-
                 Intent in = new Intent(MainActivity.this, loginn.class);
                 startActivity(in);
-                return true;
             }
+            return true;
+
 
         }else if (id == R.id.nav_gallery) {
 
-            Intent inte = new Intent(MainActivity.this, Camera.class);
+            Intent inte = new Intent(MainActivity.this, Gallery.class);
             startActivity(inte);
             return true;
 
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_update) {
 
-            if (Profile.flag) {
+            if (loginn.flag) {
                 Intent inte = new Intent(MainActivity.this, Update.class);
                 startActivity(inte);
             } else {
@@ -192,6 +191,7 @@ public class MainActivity extends AppCompatActivity
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, loginn.class);
             startActivity(intent);
+            loginn.flag = false;
 
             //Google signOut
            /* Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(

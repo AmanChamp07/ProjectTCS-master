@@ -4,43 +4,18 @@ package com.example.keshav.projecttcs;
  * Created by keshav on 17-07-2017.
  */
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.BoolRes;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class BeneficiaryListActivity extends AppCompatActivity {
@@ -85,8 +60,8 @@ public class BeneficiaryListActivity extends AppCompatActivity {
         fr = new FirebaseRetrieve(db);
         fr.retrieve();
         do {
-            adapter = new BeneficiaryRecyclerAdapter(this, fr.getDonorsAakash());
-        } while (fr.getDonorsAakash() == null);
+            adapter = new BeneficiaryRecyclerAdapter(this, fr.getDonorsMuskan());
+        } while (fr.getDonorsMuskan() == null);
         listView.setAdapter(adapter);
 
         Button b = (Button) findViewById(R.id.refresh);

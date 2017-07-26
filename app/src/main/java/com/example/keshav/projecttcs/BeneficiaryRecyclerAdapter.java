@@ -37,7 +37,7 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
         Log.e("Aman","Benificiary Const");
         this.c = c;
 //        db = FirebaseDatabase.getInstance().getReference();
-//        this.donors = new FirebaseRetrieve(db).getDonorsAakash();
+//        this.donors = new FirebaseRetrieve(db).getDonorsMuskan();
         for (DonorDeatils d: donors){
             Log.e("Aman:",d.getUsername());
        }

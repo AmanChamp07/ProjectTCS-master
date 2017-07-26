@@ -20,12 +20,12 @@
 
         <item
             android:id="@+id/nav_prof"
-            android:icon="@drawable/accountcircle"
+            android:icon="@drawable/profile"
             android:title="Your profile"
             />
         <item
             android:id="@+id/nav_update"
-            android:icon="@drawable/accountbox"
+            android:icon="@drawable/update"
             android:title="Update" />
         <item
             android:id="@+id/nav_gallery"
@@ -40,7 +40,7 @@
 
         <item
             android:id="@+id/nav_req"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/request"
             android:title="Request"
             android:layout_width="match_parent" />
     </group>
@@ -58,7 +58,7 @@
 
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/helpbox"
+                android:icon="@drawable/logout"
                 android:title="Logout"/>
 
 

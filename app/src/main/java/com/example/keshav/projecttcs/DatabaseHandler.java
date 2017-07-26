@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by keshav on 17-07-2017.
+ * Created by keshav on 18-07-2017.
  */
 
-public class DatabaseHandler extends SQLiteOpenHelper{
+public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "contactsManager";
 
     // Contacts table name
-    private static final String TABLE_IMAGE = "images";
+    private static final String TABLE_CONTACTS = "contacts";
 
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
@@ -34,15 +34,25 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //Create tables
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_TABLE_CONTACTS="CREATE TABLE " + TABLE_CONTACTS + "("
+                + KEY_ID +" INTEGER PRIMARY KEY,"
+                + KEY_FNAME +" TEXT,"
+                + KEY_POTO  +" BLOB" + ")";
+        db.execSQL(CREATE_TABLE_CONTACTS);
+    }
+
     // Upgrading database
     @Override
-    public void onUpgrade(SQLiteDatabase dbi, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         // Drop older table if existed
-        dbi.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
 
         // Create tables again
-        onCreate(dbi);
+        onCreate(db);
     }
 
     /**
@@ -50,16 +60,16 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      */
 
     //Insert values to the table contacts
-    public void addImages(Image image){
-        SQLiteDatabase dbi = this.getReadableDatabase();
+    public void addContacts(StorePics contact){
+        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values=new ContentValues();
 
-        values.put(KEY_FNAME, image.getFName());
-        values.put(KEY_POTO, image.getImage() );
+        values.put(KEY_FNAME, contact.getFName());
+        values.put(KEY_POTO, contact.getImage() );
 
 
-        dbi.insert(TABLE_IMAGE, null, values);
-        dbi.close();
+        db.insert(TABLE_CONTACTS, null, values);
+        db.close();
     }
 
 
@@ -67,30 +77,32 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      *Getting All Contacts
      **/
 
-    public List<Image> getAllImages() {
-        List<Image> imageList = new ArrayList<Image>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
+    public List<StorePics> getAllContacts() {
 
-        SQLiteDatabase dbi = this.getWritableDatabase();
-        Cursor cursori = dbi.rawQuery(selectQuery, null);
+
+        List<StorePics> contactList = new ArrayList<StorePics>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
-        if (cursori.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
-                Image image = new Image();
-                image.setID(Integer.parseInt(cursori.getString(0)));
-                image.setFName(cursori.getString(1));
-                image.setImage(cursori.getBlob(2));
+                StorePics contact = new StorePics();
+                contact.setID(Integer.parseInt(cursor.getString(0)));
+                contact.setFName(cursor.getString(1));
+                contact.setImage(cursor.getBlob(2));
 
 
                 // Adding contact to list
-                imageList.add(image);
-            } while (cursori.moveToNext());
+                contactList.add(contact);
+            } while (cursor.moveToNext());
         }
 
         // return contact list
-        return imageList;
+        return contactList;
     }
 
 
@@ -98,16 +110,16 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      *Updating single contact
      **/
 
-    public int updateImage(Image image, int id) {
-        SQLiteDatabase dbi = this.getWritableDatabase();
+    public int updateContact(StorePics contact, int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_FNAME, image.getFName());
-        values.put(KEY_POTO, image.getImage());
+        values.put(KEY_FNAME, contact.getFName());
+        values.put(KEY_POTO, contact.getImage());
 
 
         // updating row
-        return dbi.update(TABLE_IMAGE, values, KEY_ID + " = ?",
+        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
     }
 
@@ -116,20 +128,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      **/
 
     public void deleteContact(int Id) {
-        SQLiteDatabase dbi = this.getWritableDatabase();
-        dbi.delete(TABLE_IMAGE, KEY_ID + " = ?",
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
                 new String[] { String.valueOf(Id) });
-        dbi.close();
+        db.close();
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-
-        String CREATE_TABLE_CONTACTS="CREATE TABLE " + TABLE_IMAGE + "("
-                + KEY_ID +" INTEGER PRIMARY KEY,"
-                + KEY_FNAME +" TEXT,"
-                + KEY_POTO  +" BLOB" + ")";
-        db.execSQL(CREATE_TABLE_CONTACTS);
-
-    }
 }

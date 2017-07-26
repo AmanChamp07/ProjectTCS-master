@@ -109,7 +109,7 @@ public class Update extends MainActivity  {
                     }
                     else {
 
-                        UpdateDB c1 = new UpdateDB();
+                        /*UpdateDB c1 = new UpdateDB();
                         c1.setHeight(strH);
                         c1.setWeight(strW);
                         c1.setLdate(strD);
@@ -117,7 +117,7 @@ public class Update extends MainActivity  {
                         c1.setUphone(strP);
                        // DatabaseHelper helper12 = new DatabaseHelper(this);
                         //helper.Createdb(helper.db);
-                        helper.insertContact1(c1);
+                        helper.insertContact1(c1);*/
 
                         Toast tem = Toast.makeText(Update.this, "Your profile has been updated!", Toast.LENGTH_SHORT);
                         tem.show();

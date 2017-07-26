@@ -63,28 +63,23 @@
         </activity>
 
         <activity android:name=".Signup"
-            android:label="Project TCS"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <activity android:name=".Gallery"
-            android:label="Project TCS"
+            android:label="Blood Donation"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
 
         <activity android:name=".DonorList"
-            android:label="Project TCS"
+            android:label="Blood Donation"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".Camera"
-            android:label="Project TCS"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".Gallery"
+            android:label="Blood Donation"
+            android:theme="@style/AppTheme">
         </activity>
 
         <activity android:name=".BeneficiaryListActivity"
-            android:label="Project TCS"
+            android:label="Blood Donation"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
