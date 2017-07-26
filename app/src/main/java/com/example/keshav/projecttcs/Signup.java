@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -43,6 +45,10 @@ public class Signup extends AppCompatActivity {
     Button createAccount;
     TextView already;
 
+    String MobilePattern = "[0-9]{10}";
+    String PinPattern = "[0-9]{6}";
+
+
     static ArrayList<String> details = new ArrayList<>();
 
     static String memail, musername, mpassword, mconfirm, mgender, mage, mcontact, mcity, mpincode, mbloodgroup;
@@ -55,6 +61,16 @@ public class Signup extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        already = (TextView)findViewById(R.id.link_login);
+
+        already.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Signup.this, loginn.class);
+                startActivity(intent);
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -103,7 +119,11 @@ public class Signup extends AppCompatActivity {
         createAccount = (Button) findViewById(R.id.Bsignupbutton);
         already = (TextView) findViewById(R.id.link_login);
 
+
+
         mAuth.addAuthStateListener(mAuthListener);
+
+
     }
 
     public void sign_Up(View view) {
@@ -118,6 +138,8 @@ public class Signup extends AppCompatActivity {
         mpincode = pincode.getText().toString();
         mbloodgroup = bloodgroup.getText().toString();
 
+
+
         if (memail.isEmpty() || mpassword.isEmpty() || musername.isEmpty() || mconfirm.isEmpty() || mgender.isEmpty() || mage.isEmpty() || mcontact.isEmpty() || mcity.isEmpty() || mpincode.isEmpty()){
             Snackbar.make(view, "Fill the details completely", Snackbar.LENGTH_SHORT).show();
             return;
@@ -127,6 +149,20 @@ public class Signup extends AppCompatActivity {
             confirm.setError("Passwords don't match");
             return;
         }
+        if (!isValidEmail(memail))
+        {
+            email.setError("Please enter valid email address!");
+        }
+
+        if (!mcontact.matches(MobilePattern))
+        {
+            Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
+        }
+
+        if (!mpincode.matches(PinPattern))
+        {
+            Toast.makeText(getApplicationContext(), "Enter Valid Pincode", Toast.LENGTH_SHORT).show();
+        }
         //showProgressDialog();
 
         mAuth.createUserWithEmailAndPassword(memail, mpassword)
@@ -135,6 +171,10 @@ public class Signup extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("Firebase", "createUserWithEmail:onComplete:" + task.isSuccessful());
 
+                        //Toast temp = Toast.makeText(Signup.this, "You are successfully registered!", Toast.LENGTH_SHORT);
+                        //temp.show();
+
+
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -142,6 +182,11 @@ public class Signup extends AppCompatActivity {
                             Log.w("App", "signInWithEmail", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast temp = Toast.makeText(Signup.this, "You are successfully registered!", Toast.LENGTH_SHORT);
+                            temp.show();
+
                         }
 
                         //hideProgressDialog();
@@ -186,12 +231,12 @@ public class Signup extends AppCompatActivity {
     }
 
     private void addtoFirebase(){
-        Log.e("aakash","adding to firebase function");
+        Log.e("muskan","adding to firebase function");
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
             Intent intent = new Intent(this, loginn.class);
             startActivity(intent);
         }else {
-            Log.e("aakash","else ran");
+            Log.e("muskan","else ran");
             String Uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             myRef = FirebaseDatabase.getInstance().getReference();
             myRef.child("Donors").child(Uid).child("Name").setValue(musername);
@@ -204,5 +249,39 @@ public class Signup extends AppCompatActivity {
             myRef.child("Donors").child(Uid).child("Email").setValue(memail);
         }
     }
+
+    public boolean isValidEmail(String email) {
+
+        String validemail = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+
+                "\\@" +
+
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+
+                "(" +
+
+                "\\." +
+
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+
+                ")+";
+
+
+        String email1 = email;
+
+        Matcher matcher = Pattern.compile(validemail).matcher(email);
+
+
+        if (matcher.matches()) {
+            //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+            return true;
+
+
+        } else {
+
+            return false;
+        }
+    }
+
 }
 

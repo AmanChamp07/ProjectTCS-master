@@ -47,7 +47,6 @@ public class Profile extends MainActivity {
 
     Button display;
 
-    static boolean flag;
     static ArrayList<ProfileDetails> user_profile = new ArrayList<>();
 
     ProfileDetails pd = new ProfileDetails();

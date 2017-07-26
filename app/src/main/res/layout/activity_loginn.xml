@@ -4,7 +4,8 @@
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
-    android:background="@drawable/buttonshape">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bgset">
 
     <LinearLayout
         android:orientation="vertical"
@@ -45,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            app:passwordToggleEnabled="true"
             android:layout_marginBottom="6dp">
             <EditText android:id="@+id/edpassword"
                 android:layout_width="match_parent"

@@ -76,7 +76,7 @@ public class FirebaseRetrieve {
         return donors;
     }
 
-    public static ArrayList<DonorDeatils> getDonorsAakash(){
+    public static ArrayList<DonorDeatils> getDonorsMuskan(){
         return donors;
     }
 }
