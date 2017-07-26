@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by keshav on 10-07-2017.
+ * Created by muskan on 10-07-2017.
  */
 
 public class SQLiteListAdapter{

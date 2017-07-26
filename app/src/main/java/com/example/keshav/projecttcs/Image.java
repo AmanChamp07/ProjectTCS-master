@@ -1,7 +1,7 @@
 package com.example.keshav.projecttcs;
 
 /**
- * Created by keshav on 17-07-2017.
+ * Created by muskan on 17-07-2017.
  */
 
 public class Image {
@@ -9,7 +9,6 @@ public class Image {
     int _id;
     String _fname;
     byte[] _img;
-
 
 
     // Empty constructor

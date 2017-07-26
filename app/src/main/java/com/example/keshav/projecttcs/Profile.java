@@ -30,7 +30,7 @@ import java.util.jar.Attributes;
 
 
 /**
- * Created by keshav on 25-06-2017.
+ * Created by muskan on 25-06-2017.
  */
 
 public class Profile extends MainActivity {
@@ -70,7 +70,7 @@ public class Profile extends MainActivity {
                 String[] arr = dataSnapshot.getValue().toString().split(" ");
                 for(String st : arr) {
                     c++;
-                    Log.e("haha", st + " " + c);
+                    Log.e("muskan", st + " " + c);
                     user.add(st);
                 }
                 if(user.size() >= 8) show_details(arr);

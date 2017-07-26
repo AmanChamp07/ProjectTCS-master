@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 /**
- * Created by keshav on 23-07-2017.
+ * Created by muskan on 23-07-2017.
  */
 
 public class Sendrequest extends MainActivity {
@@ -61,10 +61,10 @@ public class Sendrequest extends MainActivity {
                     String send_email;
                     Log.e("Notification",user.getEmail());
                     //This is a Simple Logic to Send Notification different Device Programmatically....
-                    if (LoggedIn_User_Email.equals("amanschauhan07@gmail.com")) {
-                        send_email = "123aakashsharma@gmail.com";
+                    if (LoggedIn_User_Email.equals("muskan.123bansal@gmail.com")) {
+                        send_email = "123user2gmail.com";
                     } else {
-                        send_email = "123aakashsharma@gmail.com";
+                        send_email = "123user2@gmail.com";
                     }
 
                     try {
@@ -137,7 +137,7 @@ public class Sendrequest extends MainActivity {
 
         try {
             v.getContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            Log.i("Finished sending email.", "to Aman");
+            Log.i("Finished sending email.", "to Muskan");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }*/

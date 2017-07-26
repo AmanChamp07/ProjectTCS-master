@@ -1,7 +1,7 @@
 package com.example.keshav.projecttcs;
 
 /**
- * Created by keshav on 17-07-2017.
+ * Created by muskan on 17-07-2017.
  */
 
 import android.content.Context;
@@ -35,7 +35,7 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
     DatabaseReference db;
 
     BeneficiaryRecyclerAdapter(Context c, ArrayList<DonorDeatils> donors){
-        Log.e("Aman","Benificiary Const");
+        Log.e("Muskan","Benificiary Const");
         this.c = c;
 //        db = FirebaseDatabase.getInstance().getReference();
 //        this.donors = new FirebaseRetrieve(db).getDonorsMuskan();
@@ -66,7 +66,7 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(c).inflate(R.layout.listviewdatalayout, parent, false);
 
         for (DonorDeatils d: donors){
-            Log.e("Aman init:",d.getUsername());
+            Log.e("Muskan init:",d.getUsername());
         }
 
         TextView donorName = (TextView) convertView.findViewById(R.id.donor_name);

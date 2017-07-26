@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 /**
- * Created by AmanPC on 23-07-2017.
+ * Created by muskan on 23-07-2017.
  */
 
 public class FirebaseRetrieve {
@@ -27,7 +27,7 @@ public class FirebaseRetrieve {
         donors.clear();
         for (DataSnapshot myds : dataSnapshot.getChildren()){
             DonorDeatils donorDeatils = new DonorDeatils();
-            Log.i("aman",myds.child("Name").getValue()+"");
+            Log.i("muskan",myds.child("Name").getValue()+"");
             donorDeatils.setUsername(myds.child("Name").getValue().toString());
             donorDeatils.setCity(myds.child("City").getValue().toString());
             donorDeatils.setBloodgroup(myds.child("Blood Group").getValue().toString());
@@ -45,7 +45,7 @@ public class FirebaseRetrieve {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-//                Log.i("aman",dataSnapshot.child("5fjcFXiFq1Y0mPsXEu4qxMRoC8p2").child("Name").getValue().toString());
+//                Log.i("muskan",dataSnapshot.child("5fjcFXiFq1Y0mPsXEu4qxMRoC8p2").child("Name").getValue().toString());
 //                DonorDeatils donorDeatils = dataSnapshot.getValue(DonorDeatils.class);
 //                donorDeatils.setUsername(dataSnapshot.child("Name").getValue().toString());
 //                donorDeatils.setCity(dataSnapshot.child("City").getValue().toString());
@@ -77,7 +77,7 @@ public class FirebaseRetrieve {
         return donors;
     }
 
-    public static ArrayList<DonorDeatils> getDonorsAman(){
+    public static ArrayList<DonorDeatils> getDonorMuskan(){
         return donors;
     }
 }

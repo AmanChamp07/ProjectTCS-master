@@ -145,7 +145,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_gallery) {
 
-
+            Intent inte = new Intent(MainActivity.this, Gallery.class);
+            startActivity(inte);
             return true;
 
         } else if (id == R.id.nav_manage) {
@@ -168,10 +169,19 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String shareBody = "your body here";
+            String shareSub = "your subject here";
 
+            intent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+            intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(intent,"Share using"));
 
         } else if (id == R.id.nav_help) {
+
+            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+
 
         } else if (id == R.id.nav_logout) {
             //firebase signOut

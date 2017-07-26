@@ -42,7 +42,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
- * Created by keshav on 19-06-2017.
+ * Created by muskan on 19-06-2017.
  */
 
 public class loginn extends MainActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -53,6 +53,8 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
+
+    static boolean flag = false;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -243,6 +245,11 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 Log.d("FireBase", "signInWithEmail:onComplete:" + task.isSuccessful());
 
+                                Toast temp = Toast.makeText(loginn.this, "Welcome!", Toast.LENGTH_SHORT);
+                                temp.show();
+
+                                flag = true;
+
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
@@ -287,6 +294,15 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
+                Toast temp = Toast.makeText(loginn.this, "Welcome!", Toast.LENGTH_SHORT);
+                temp.show();
+
+                flag = true;
+
+                Intent intent = new Intent(loginn.this, MainActivity.class);
+                startActivity(intent);
+
             } else {
                 Log.i(TAG, "Failed SignIn");
                 Log.d(TAG, String.valueOf(result.getStatus()));
@@ -336,5 +352,10 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void onBackPressed() {
+        startActivity(new Intent(loginn.this, MainActivity.class));
+        super.onBackPressed();
     }
 }

@@ -67,6 +67,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <activity android:name=".Gallery"
+            android:label="Project TCS"
+            android:theme="@style/AppTheme">
+        </activity>
+
         <activity android:name=".BeneficiaryListActivity"
             android:label="Project TCS"
             android:theme="@style/AppTheme.NoActionBar">
