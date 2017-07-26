@@ -32,10 +32,6 @@ public class ProfileDetails  implements Serializable{
         Pincode = pincode;
     }
 
-    public ProfileDetails(String Age, String BloodGroup, String City, String Contact, String Gender, String Name, String Pincode){
-
-    }
-
     public String getName() {
         return Name;
     }

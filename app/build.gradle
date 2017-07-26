@@ -11,7 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        manifestPlaceholders = [onesignal_app_id: "cae78fe4-8d98-4853-b086-ad6dcab71a81",
+        manifestPlaceholders = [onesignal_app_id: "790a3f8a-f770-4a2c-8ca5-b7c45f7524c9",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
 
@@ -19,6 +19,10 @@ android {
 
     repositories {
         mavenCentral()
+    }
+
+    repositories {
+        maven { url "https://jitpack.io" }
     }
 
     buildTypes {
@@ -48,6 +52,9 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-database:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.github.yesidlazaro:GmailBackground:1.2.0'
     compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
     compile 'com.android.support:customtabs'
     testCompile 'junit:junit:4.12'

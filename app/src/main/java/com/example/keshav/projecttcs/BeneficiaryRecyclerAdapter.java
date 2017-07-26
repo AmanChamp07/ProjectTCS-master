@@ -97,7 +97,8 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Sendrequest sendRequest = new Sendrequest();
-                                sendRequest.sendNotification();
+                                sendRequest.sendMail(convertView1,donorDeatils.getEmail());
+                                Toast.makeText(convertView1.getContext(), "Only Mail is sent", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("NO", new DialogInterface.OnClickListener() {

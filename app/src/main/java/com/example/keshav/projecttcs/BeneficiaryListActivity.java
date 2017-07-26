@@ -86,8 +86,8 @@ public class BeneficiaryListActivity extends AppCompatActivity {
         fr = new FirebaseRetrieve(db);
         fr.retrieve();
         do {
-            adapter = new BeneficiaryRecyclerAdapter(this, fr.getDonorsAakash());
-        } while (fr.getDonorsAakash() == null);
+            adapter = new BeneficiaryRecyclerAdapter(this, fr.getDonorsAman());
+        } while (fr.getDonorsAman() == null);
         listView.setAdapter(adapter);
 
         Button b = (Button) findViewById(R.id.refresh);

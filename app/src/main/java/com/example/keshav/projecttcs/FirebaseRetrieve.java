@@ -32,6 +32,7 @@ public class FirebaseRetrieve {
             donorDeatils.setCity(myds.child("City").getValue().toString());
             donorDeatils.setBloodgroup(myds.child("Blood Group").getValue().toString());
             donorDeatils.setMobile(myds.child("Contact").getValue().toString());
+            donorDeatils.setEmail(myds.child("Email").getValue().toString());
             donors.add(donorDeatils);
 //            Log.e("Firebase Retrival",donorDeatils.getAge());
 
@@ -76,7 +77,7 @@ public class FirebaseRetrieve {
         return donors;
     }
 
-    public static ArrayList<DonorDeatils> getDonorsMuskan(){
+    public static ArrayList<DonorDeatils> getDonorsAman(){
         return donors;
     }
 }

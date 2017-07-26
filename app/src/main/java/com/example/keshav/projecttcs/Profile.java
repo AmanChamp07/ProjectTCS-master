@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.jar.Attributes;
 
 
@@ -33,22 +35,19 @@ import java.util.jar.Attributes;
 
 public class Profile extends MainActivity {
 
-   /* FirebaseDatabase database= FirebaseDatabase.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    DatabaseReference db = database.getReference().child("Donors").child(user.getUid()); */
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     FirebaseDatabase fdata = FirebaseDatabase.getInstance();
-    DatabaseReference db = fdata.getReference().child("Donors");
+    DatabaseReference db = fdata.getReference().child("Donors").child(firebaseUser.getUid());
 
 
-    static TextView name,age,height,bloodgroup,city,phone;
+    static TextView name, age, height, bloodgroup, city, phone;
     Button btnviewAll;
 
     Button display;
 
     static ArrayList<ProfileDetails> user_profile = new ArrayList<>();
-
+    List<String> user = new ArrayList<>();
     ProfileDetails pd = new ProfileDetails();
     Signup signup = new Signup();
 
@@ -56,22 +55,29 @@ public class Profile extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-       /* Log.e("Curr user",user.getUid());
+        Log.e("Curr user", firebaseUser.getUid());
 
+        name = (TextView) findViewById(R.id.prname);
+        age = (TextView) findViewById(R.id.prage);
+        bloodgroup = (TextView) findViewById(R.id.prweight);
+        city = (TextView) findViewById(R.id.prdate);
+        phone = (TextView) findViewById(R.id.prphone);
 
-       /* db.addChildEventListener(new ChildEventListener() {
+        db.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-               /* Log.e("PROFILE: ",dataSnapshot.child("Name").getValue().toString());
-                pd.setCity(dataSnapshot.child("City").getValue().toString());
-                pd.setName(dataSnapshot.child("Name").getValue().toString());
-                pd.setAge(dataSnapshot.child("Age").getValue().toString());
-                pd.setBloodGroup(dataSnapshot.child("Blood Group").getValue().toString());
-                pd.setContact(dataSnapshot.child("Contact").getValue().toString());
-                user_profile.add(pd);*/
-        //}
+                int c = 1;
+                String[] arr = dataSnapshot.getValue().toString().split(" ");
+                for(String st : arr) {
+                    c++;
+                    Log.e("haha", st + " " + c);
+                    user.add(st);
+                }
+                if(user.size() >= 8) show_details(arr);
 
-           /* @Override
+            }
+
+            @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
@@ -90,13 +96,7 @@ public class Profile extends MainActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        }); */
-
-        name = (TextView) findViewById(R.id.prname);
-        age = (TextView) findViewById(R.id.prage);
-        bloodgroup = (TextView) findViewById(R.id.prweight);
-        city = (TextView) findViewById(R.id.prdate);
-        phone = (TextView) findViewById(R.id.prphone);
+        });
 
         //show_details();
 
@@ -109,4 +109,13 @@ public class Profile extends MainActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void show_details(String[] arr){
+        name.setText(user.get(6));
+        age.setText(user.get(0));
+        bloodgroup.setText(user.get(1));
+        city.setText(user.get(2));
+        phone.setText(user.get(3));
+    }
+
 }

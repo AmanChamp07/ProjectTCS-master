@@ -53,21 +53,18 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-       // drawer.setDrawerListener(toggle);
+        // drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+       /* FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         String LoggedIn_User_Email = user.getEmail();
-        OneSignal.sendTag("USER_ID",LoggedIn_User_Email);
+        OneSignal.sendTag("USER_ID", LoggedIn_User_Email); */
 
     }
 
@@ -93,12 +90,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if(drawer!=null){
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }  }
+        if (drawer != null) {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
 
@@ -125,7 +123,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -133,30 +130,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Toast.makeText(getApplicationContext(),"You are already on home",Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_account) {
+            Toast.makeText(getApplicationContext(), "You are already on home", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_account) {
 
             Intent intent = new Intent(MainActivity.this, Signup.class);
             startActivity(intent);
             return true;
 
-        }  else if (id == R.id.nav_log) {
+        } else if (id == R.id.nav_log) {
 
-            if (Profile.flag)
-            {
+            Intent intent = new Intent(this, loginn.class);
+            startActivity(intent);
+            return true;
 
-                Toast temp = Toast.makeText(this, "You are already logged in!", Toast.LENGTH_SHORT);
-                temp.show();            }
-
-            else {
-
-                Intent in = new Intent(MainActivity.this, loginn.class);
-                startActivity(in);
-                return true;
-            }
-
-        }else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_gallery) {
 
 
             return true;
@@ -167,29 +154,26 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
 
-        }else if (id == R.id.nav_req) {
+        } else if (id == R.id.nav_req) {
 
             Intent intent = new Intent(MainActivity.this, requestpage.class);
             startActivity(intent);
             return true;
 
-        }
-        else if (id == R.id.nav_update) {
+        } else if (id == R.id.nav_update) {
 
             Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
 
             return true;
 
-        }else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
 
             Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
 
 
         } else if (id == R.id.nav_help) {
 
-        }
-
-        else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
             //firebase signOut
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, loginn.class);
@@ -205,8 +189,7 @@ public class MainActivity extends AppCompatActivity
                             // [END_EXCLUDE]
                         }
                     });*/
-        }
-        else if (id == R.id.nav_prof) {
+        } else if (id == R.id.nav_prof) {
 
             Intent inte = new Intent(MainActivity.this, Profile.class);
             startActivity(inte);

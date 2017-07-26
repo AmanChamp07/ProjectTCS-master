@@ -71,6 +71,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/prweight"
+        android:textSize="25sp"
         android:layout_alignBottom="@+id/pweight"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/pweight" />
@@ -94,6 +95,7 @@
         android:layout_alignBottom="@+id/pdate"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:textSize="25sp"
         android:id="@+id/prdate"
         android:layout_alignTop="@+id/pdate"
         android:layout_alignStart="@+id/prage" />
@@ -117,6 +119,7 @@
         android:layout_alignBottom="@+id/pphone"
         android:layout_alignParentRight="true"
         android:id="@+id/prphone"
+        android:textSize="25sp"
         android:layout_alignTop="@+id/pphone"
         android:layout_alignStart="@+id/prdate" />
 

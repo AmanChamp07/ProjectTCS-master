@@ -1,12 +1,17 @@
 package com.example.keshav.projecttcs;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -116,5 +121,48 @@ public class Sendrequest extends MainActivity {
                 }
             }
         });
+    }
+
+    public void sendMail(final View v, String email){
+        sendNotification();
+        /*String[] TO = {email};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        Log.e("to",email);
+        emailIntent.setData(Uri.parse("mailto:"+email));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.setType("message/rfc822");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Request For Blood Donation");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hii, this is Blood Donation Request from the mail "+user.getEmail());
+
+        try {
+            v.getContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            Log.i("Finished sending email.", "to Aman");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }*/
+
+        BackgroundMail.newBuilder(v.getContext())
+                .withUsername("aman1751996@gmail.com")
+                .withPassword("Aman@1996")
+                .withMailto(email)
+                .withType(BackgroundMail.TYPE_PLAIN)
+                .withSubject("Request For Blood Donation")
+                .withBody("Hii, this is Blood Donation Request from the mail "+user.getEmail())
+                .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                    @Override
+                    public void onSuccess() {
+                        //do some magic
+                        Toast.makeText(v.getContext(), "Successful Mail Sent", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .withOnFailCallback(new BackgroundMail.OnFailCallback() {
+                    @Override
+                    public void onFail() {
+                        //do some magic
+                        Toast.makeText(v.getContext(), "Unsuccessful Mail Sent", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .send();
     }
 }
