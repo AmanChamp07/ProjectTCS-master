@@ -201,6 +201,7 @@ public class Signup extends AppCompatActivity {
             myRef.child("Donors").child(Uid).child("Contact").setValue(mcontact);
             myRef.child("Donors").child(Uid).child("City").setValue(mcity);
             myRef.child("Donors").child(Uid).child("PinCode").setValue(mpincode);
+            myRef.child("Donors").child(Uid).child("Email").setValue(memail);
         }
     }
 }

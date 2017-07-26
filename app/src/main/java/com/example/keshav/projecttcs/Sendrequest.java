@@ -3,9 +3,11 @@ package com.example.keshav.projecttcs;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.OutputStream;
@@ -21,7 +23,7 @@ public class Sendrequest extends MainActivity {
 
     Button notification;
 
-    FirebaseUser user = loginn.mAuth.getCurrentUser();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     String LoggedIn_User_Email = user.getEmail();
 
@@ -52,12 +54,12 @@ public class Sendrequest extends MainActivity {
                             .permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     String send_email;
-
+                    Log.e("Notification",user.getEmail());
                     //This is a Simple Logic to Send Notification different Device Programmatically....
                     if (LoggedIn_User_Email.equals("amanschauhan07@gmail.com")) {
-                        send_email = "asc000777@gmail.com";
+                        send_email = "123aakashsharma@gmail.com";
                     } else {
-                        send_email = "aman17596@gmail.com";
+                        send_email = "123aakashsharma@gmail.com";
                     }
 
                     try {
@@ -83,7 +85,7 @@ public class Sendrequest extends MainActivity {
                                 + "}";
 
 
-                        System.out.println("strJsonBody:\n" + strJsonBody);
+                        Log.i("strJsonBody:" , strJsonBody);
 
                         byte[] sendBytes = strJsonBody.getBytes("UTF-8");
                         con.setFixedLengthStreamingMode(sendBytes.length);
@@ -92,7 +94,7 @@ public class Sendrequest extends MainActivity {
                         outputStream.write(sendBytes);
 
                         int httpResponse = con.getResponseCode();
-                        System.out.println("httpResponse: " + httpResponse);
+                        Log.i("httpResponse: " , httpResponse+"");
 
                         if (httpResponse >= HttpURLConnection.HTTP_OK
                                 && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {

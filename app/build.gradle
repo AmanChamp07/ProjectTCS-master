@@ -6,10 +6,14 @@ android {
     defaultConfig {
         applicationId "com.example.keshav.projecttcs"
         minSdkVersion 21
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [onesignal_app_id: "cae78fe4-8d98-4853-b086-ad6dcab71a81",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "REMOTE"]
 
     }
 
@@ -37,13 +41,15 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.12.0'
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:support-v4:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:support-v4:25.0.1'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
-    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:design:25.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-database:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
+    compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
+    compile 'com.android.support:customtabs'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

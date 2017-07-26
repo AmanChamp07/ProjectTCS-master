@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -60,7 +61,7 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position,View convertView, ViewGroup parent) {
         if (convertView == null)
             convertView = LayoutInflater.from(c).inflate(R.layout.listviewdatalayout, parent, false);
 
@@ -72,6 +73,7 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
         TextView donorContact = (TextView) convertView.findViewById(R.id.donor_contact);
         TextView donorCity = (TextView) convertView.findViewById(R.id.donor_city);
         TextView donorBloodGroup = (TextView) convertView.findViewById(R.id.donor_blood_group);
+        Button requestButton = (Button) convertView.findViewById(R.id.listRequestButton);
 
         final DonorDeatils donorDeatils = (DonorDeatils) this.getItem(position);
 
@@ -81,17 +83,31 @@ public class BeneficiaryRecyclerAdapter extends BaseAdapter{
         donorBloodGroup.setText("Blood Group: "+donorDeatils.getBloodgroup());
         Log.e("Dono: ",donorDeatils.getUsername());
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        final View convertView1 = convertView;
+
+        requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String details = "Name: "+donorDeatils.getUsername()+"\nContact: "+donorDeatils.getMobile()+"\nCity: "+donorDeatils.getCity()+"\nBlood Group: "+donorDeatils.getBloodgroup();
+                Log.e("List Click: ",donorDeatils.getUsername()+"");
 
-                new AlertDialog.Builder(c).setIcon(null).setTitle("Donor Details").setMessage(details).setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(c, "Request Notification under Process", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(convertView1.getContext());
+                alertDialogBuilder.setTitle("Blood Donation Request");
+                alertDialogBuilder.setMessage("Do you want to send request to this donor?").setCancelable(false)
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Sendrequest sendRequest = new Sendrequest();
+                                sendRequest.sendNotification();
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 

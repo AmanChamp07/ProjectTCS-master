@@ -26,7 +26,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.jar.Attributes;
 
-import static com.example.keshav.projecttcs.DatabaseHelper.COLUMN_EMAIL;
 
 /**
  * Created by keshav on 25-06-2017.

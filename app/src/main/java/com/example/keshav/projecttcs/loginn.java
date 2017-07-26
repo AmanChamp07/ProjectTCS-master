@@ -67,8 +67,8 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
     EditText userName, password;
     Button mlogin;
     TextView createAccount;
-    TextView textView = (TextView) findViewById(R.id.user_name);
-    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//    TextView textView = (TextView) findViewById(R.id.user_name);
+//    ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @RequiresApi(api = Build.VERSION_CODES.M)
@@ -175,7 +175,7 @@ public class loginn extends MainActivity implements View.OnClickListener, Google
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void displayMessage(Profile profile){
         if (profile != null){
-            textView.setText(profile.getName());
+           // textView.setText(profile.getName());
         }
     }
 

@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,6 +101,10 @@ public class BeneficiaryListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(BeneficiaryListActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+                Log.e("List Click: ",position+"");
+
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeneficiaryListActivity.this);
                 alertDialogBuilder.setTitle("Blood Donation Request");
                 alertDialogBuilder.setMessage("Do you want to send request to this donor?").setCancelable(false)

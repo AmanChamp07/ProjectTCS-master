@@ -26,6 +26,8 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.onesignal.OneSignal;
 
 public class MainActivity extends AppCompatActivity
 
@@ -57,6 +59,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        String LoggedIn_User_Email = user.getEmail();
+        OneSignal.sendTag("USER_ID",LoggedIn_User_Email);
 
     }
 
@@ -147,8 +158,7 @@ public class MainActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_gallery) {
 
-            Intent inte = new Intent(MainActivity.this, Camera.class);
-            startActivity(inte);
+
             return true;
 
         } else if (id == R.id.nav_manage) {
@@ -166,21 +176,13 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_update) {
 
-            if (Profile.flag) {
-                Intent inte = new Intent(MainActivity.this, Update.class);
-                startActivity(inte);
-            } else {
-                Intent inte = new Intent(MainActivity.this, loginn.class);
-                startActivity(inte);
-
-            }
+            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
 
             return true;
 
         }else if (id == R.id.nav_share) {
 
-            Intent inte = new Intent(MainActivity.this, Gallery.class);
-            startActivity(inte);
+            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
 
 
         } else if (id == R.id.nav_help) {
